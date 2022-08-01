@@ -11,7 +11,8 @@ import {
   showContextMenu,
   staticClasses,
 } from "decky-frontend-lib";
-import { VFC } from "react";
+import { ReactElement, VFC } from "react";
+import { SMM } from "@crankshaft/types";
 import { FaShip } from "react-icons/fa";
 
 import logo from "../assets/logo.png";
@@ -20,6 +21,28 @@ import logo from "../assets/logo.png";
 //   left: number;
 //   right: number;
 // }
+
+export const load = (smm: SMM) => {
+  console.log("Decky plugin loaded");
+
+  const render = async (smm: SMM): Promise<ReactElement> => {
+    return <div>Hello world!</div>;
+  };
+
+  smm.MenuManager.addMenuItem({
+    id: "decky-plugin",
+    label: "Decky",
+    fontSize: 16,
+    render: async (smm: SMM, root: HTMLElement) => {
+      SP_REACTDOM.render(await render(smm), root);
+    },
+  });
+};
+
+export const unload = (smm: SMM) => {
+  console.info("Decky plugin unloaded!");
+  smm.MenuManager.removeMenuItem("decky-plugin");
+};
 
 const Content: VFC<{ serverAPI: ServerAPI }> = ({}) => {
   // const [result, setResult] = useState<number | undefined>();
@@ -89,7 +112,7 @@ const DeckyPluginRouterTest: VFC = () => {
   );
 };
 
-export default definePlugin((serverApi: ServerAPI) => {
+const defineThisPlugin = (serverApi: ServerAPI) => {
   serverApi.routerHook.addRoute("/decky-plugin-test", DeckyPluginRouterTest, {
     exact: true,
   });
@@ -102,4 +125,4 @@ export default definePlugin((serverApi: ServerAPI) => {
       serverApi.routerHook.removeRoute("/decky-plugin-test");
     },
   };
-});
+};

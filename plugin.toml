@@ -1,0 +1,26 @@
+name = "Decky Example"
+version = "1.0.0"
+link = "https://github.com/ShadowBlip"
+source = "https://github.com/ShadowBlip"
+min-crankshaft-version = "0.2.1"
+
+[author]
+name = "William Edwards"
+link = "https://github.com/ShadowApex"
+
+[entrypoints]
+
+	[entrypoints.desktop]
+	library = true
+	menu = false
+
+	[entrypoints.deck]
+	library = true
+	menu = false
+	quick-access = false
+
+[store]
+description = """
+Example using decky-frontend-lib
+"""
+
